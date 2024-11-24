@@ -29,9 +29,11 @@ class UrTube:
         self.current_user = None
 
     def log_in(self, nickname: str, password: str):
-        for i in self.users:
-            if nickname in i and password in i:
-                self.current_user = nickname
+        password = hash(password)
+        for user in self.users:
+            if user.nickname == nickname and user.password == password:
+                self.current_user = user
+                return
 
     def register(self, nickname: str, password: str, age: int):
         password = hash(password)
@@ -55,7 +57,7 @@ class UrTube:
         for video in self.videos:
             if text.upper() in video.title.upper():
                 list_movie.append(video.title)
-            return list_movie
+        return list_movie
 
     def watch_video(self, movie):
         if self.current_user and self.current_user.age < 18:
